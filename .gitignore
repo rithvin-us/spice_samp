@@ -10,3 +10,5 @@ dist
 .probe.mjs
 .mobile.mjs
 .final.mjs
+.autoplay.mjs
+.scrubcheck.mjs
