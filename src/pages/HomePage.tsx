@@ -6,6 +6,8 @@ import ProductSpotlight from '../components/home/ProductSpotlight';
 import MakingOfSection from '../components/making/MakingOfSection';
 import HeritageSection from '../components/heritage/HeritageSection';
 import AboutTeaser from '../components/home/AboutTeaser';
+import Reviews from '../components/social/Reviews';
+import ContactSection from '../components/social/ContactSection';
 import { observeReveals } from '../lib/animations';
 import { useMeta } from '../hooks/useMeta';
 import { useT } from '../hooks/useTranslation';
@@ -28,7 +30,9 @@ export default function HomePage() {
       {/* 04 */} <ProductSpotlight />
       {/* 05 */} <MakingOfSection />
       {/* 06 */} <HeritageSection />
-      {/* 07 */} <AboutTeaser />
+      {/* 07 */} <Reviews />
+      {/* 08 */} <AboutTeaser />
+      {/* 09 */} <ContactSection />
     </>
   );
 }

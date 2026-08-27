@@ -187,11 +187,33 @@ export default function HeroFrameSequence({
 
     /* ------------------------------------------------------- playback loop */
 
-    const tick = () => {
+    let autoPlayStart: number | null = performance.now();
+    const AUTO_PLAY_DURATION = 2200; // 2.2 seconds opening sequence
+
+    const tick = (now?: number) => {
       rafId = requestAnimationFrame(tick);
+      const currentTime = now || performance.now();
       const rect = scroller.getBoundingClientRect();
       const travel = rect.height - window.innerHeight;
-      const progress = travel <= 0 ? 0 : clamp(-rect.top / travel);
+      const actualProgress = travel <= 0 ? 0 : clamp(-rect.top / travel);
+
+      // If user has scrolled down manually, cancel auto-play intro immediately.
+      if (actualProgress > 0.05) {
+        autoPlayStart = null;
+      }
+
+      let progress = actualProgress;
+      if (autoPlayStart !== null) {
+        const elapsed = currentTime - autoPlayStart;
+        if (elapsed < AUTO_PLAY_DURATION) {
+          const t = elapsed / AUTO_PLAY_DURATION;
+          // Smooth cubic ease-in-out curve
+          const introProgress = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+          progress = Math.max(actualProgress, introProgress);
+        } else {
+          autoPlayStart = null;
+        }
+      }
 
       if (Math.abs(progress - reportedProgress) > 0.002) {
         reportedProgress = progress;
@@ -215,6 +237,7 @@ export default function HeroFrameSequence({
     request(0);
     pump();
     rafId = requestAnimationFrame(tick);
+
 
     return () => {
       disposed = true;

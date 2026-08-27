@@ -80,8 +80,8 @@ src/
   styles/                     tokens → base → layout → components
 scripts/                      hero frame + logo pipelines
 docs/HERO_ASSET_PIPELINE.md   full hero asset documentation
-legacy/aura-3d/               the unrelated implementation that previously occupied this repo
 ```
+
 
 ### Adding products
 

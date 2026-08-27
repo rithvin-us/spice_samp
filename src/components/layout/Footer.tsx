@@ -60,6 +60,11 @@ export default function Footer() {
                 {copy.nav.about}
               </Link>
             </li>
+            <li>
+              <Link to="/#contact" className="link-underline">
+                {copy.contact.label}
+              </Link>
+            </li>
           </ul>
         </nav>
 

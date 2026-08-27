@@ -1,0 +1,428 @@
+/* =========================================================================
+   07 — REVIEWS + CUSTOMER MARKS
+   Prototype content. The ratings are rendered as plain markup with no review
+   or aggregateRating structured data, so they cannot be picked up and shown
+   as genuine ratings in search results.
+   ========================================================================= */
+
+.reviews {
+  background: var(--cream);
+}
+
+.product__reviews {
+  background: var(--cream);
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+}
+
+.reviews__head {
+  display: grid;
+  gap: clamp(1rem, 3vw, 2rem);
+  margin-bottom: clamp(2rem, 5vw, 3rem);
+}
+
+.reviews__title {
+  font-size: var(--step-4);
+  max-width: 16ch;
+}
+
+.reviews__title em {
+  font-style: italic;
+  color: var(--soli-red);
+}
+
+.reviews__body {
+  color: var(--bark-soft);
+  max-width: 38ch;
+}
+
+@media (min-width: 60rem) {
+  .reviews__head {
+    grid-template-columns: 1.4fr 1fr;
+    align-items: end;
+    column-gap: clamp(2rem, 6vw, 5rem);
+  }
+}
+
+.reviews__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: clamp(1rem, 2.5vw, 1.5rem);
+  grid-template-columns: repeat(auto-fill, minmax(min(17rem, 100%), 1fr));
+}
+
+.review {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  background: var(--ivory);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-lg);
+  transition:
+    border-color 0.4s var(--ease-out),
+    box-shadow 0.4s var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .review:hover {
+    border-color: var(--rule);
+    box-shadow: var(--shadow-sm);
+  }
+}
+
+.review__rating {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 4px !important;
+  color: var(--stone);
+  margin-bottom: 0.25rem;
+}
+
+.review__rating svg {
+  display: inline-block !important;
+  flex-shrink: 0;
+}
+
+.review__rating .is-filled {
+  color: var(--turmeric);
+  fill: var(--turmeric);
+}
+
+.review__quote {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.review__foot {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: auto;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--rule-soft);
+}
+
+/* A monogram, never a stock photograph of a person who does not exist. */
+.review__initial {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--parchment);
+  border: 1px solid var(--rule-soft);
+  font-family: var(--serif);
+  font-size: var(--step-0);
+  color: var(--bark);
+  font-weight: 500;
+}
+
+.review__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.review__name {
+  display: block;
+  font-family: var(--sans);
+  font-size: var(--step-0);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.review__meta {
+  display: block;
+  font-family: var(--sans);
+  font-size: var(--step--1);
+  color: var(--bark-soft);
+}
+
+
+.review__product {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+
+.review__product span {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+}
+
+/* --------------------------------------------------------- customer marks */
+
+.clients {
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+  padding-top: clamp(1.75rem, 4vw, 2.5rem);
+  border-top: 1px solid var(--rule-soft);
+}
+
+.clients__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: clamp(1.25rem, 3vw, 1.75rem);
+  font-size: var(--step--1);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.clients__tag,
+.reviews__tag {
+  padding: 0.15rem 0.5rem;
+  border: 1px solid var(--turmeric);
+  border-radius: 999px;
+  background: rgba(223, 160, 43, 0.14);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: #8a5f14;
+  white-space: nowrap;
+}
+
+.clients__viewport {
+  overflow: hidden;
+  /* Marks fade at both edges rather than being cut off mid-word. */
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+
+.clients__rail {
+  display: flex;
+  width: max-content;
+  animation: client-scroll 42s linear infinite;
+}
+
+.clients__viewport:hover .clients__rail {
+  animation-play-state: paused;
+}
+
+@keyframes client-scroll {
+  to {
+    translate: -50% 0;
+  }
+}
+
+.clients__track {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  list-style: none;
+  margin: 0;
+  padding: 0 clamp(0.75rem, 2vw, 1.5rem) 0 0;
+}
+
+.clients__mark {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.65rem 1.1rem;
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius);
+  background: var(--ivory);
+  white-space: nowrap;
+  opacity: 0.78;
+  transition: opacity 0.35s var(--ease-out);
+}
+
+.clients__mark:hover {
+  opacity: 1;
+}
+
+.clients__monogram {
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: var(--radius-sm);
+  background: var(--bark);
+  color: var(--ivory);
+  font-family: var(--serif);
+  font-size: var(--step-0);
+  line-height: 1;
+}
+
+.clients__text {
+  display: flex;
+  flex-direction: column;
+}
+
+.clients__name {
+  font-family: var(--serif);
+  font-size: var(--step-0);
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.clients__kind {
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clients__rail {
+    animation: none;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .clients__rail > :last-child {
+    display: none;
+  }
+
+  .clients__track {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+}
+
+.reviews__disclaimer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: clamp(1.75rem, 4vw, 2.5rem);
+  font-size: var(--step--1);
+  color: var(--muted);
+  max-width: 76ch;
+}
+
+/* =========================================================================
+   09 — CONTACT
+   ========================================================================= */
+
+.contact__inner {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 3rem);
+}
+
+.contact__title {
+  margin-top: 0.75rem;
+  font-size: var(--step-4);
+}
+
+.contact__body {
+  margin-top: 0.9rem;
+  max-width: 42ch;
+}
+
+.contact__mark {
+  margin-top: 1.25rem;
+  color: var(--brass);
+  opacity: 0.7;
+}
+
+.contact__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(16.5rem, 100%), 1fr));
+}
+
+.contact__card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  height: 100%;
+  padding: clamp(1rem, 2.5vw, 1.35rem);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-lg);
+  background: var(--ivory);
+  transition:
+    border-color 0.4s var(--ease-out),
+    box-shadow 0.4s var(--ease-out),
+    translate 0.4s var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .contact__card:hover {
+    translate: 0 -3px;
+    border-color: var(--rule);
+    box-shadow: var(--shadow-md);
+  }
+
+  .contact__card:hover .contact__icon {
+    background: var(--soli-red);
+    color: #fff;
+    border-color: var(--soli-red);
+  }
+}
+
+.contact__icon {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  border: 1px solid var(--rule-soft);
+  border-radius: 999px;
+  background: var(--parchment);
+  color: var(--bark);
+  transition:
+    background-color 0.4s var(--ease-out),
+    color 0.4s var(--ease-out),
+    border-color 0.4s var(--ease-out);
+}
+
+.contact__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.contact__name {
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.contact__handle {
+  font-family: var(--serif);
+  font-size: var(--step-0);
+  color: var(--ink);
+  /* Handles must never split mid-word into an orphaned character. */
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.contact__note {
+  font-size: var(--step--1);
+  color: var(--bark-soft);
+}
+
+.contact__placeholder {
+  font-size: var(--step--1);
+  font-style: italic;
+  color: var(--muted);
+}
+
+@media (min-width: 60rem) {
+  .contact__inner {
+    grid-template-columns: 1fr 1.15fr;
+    align-items: start;
+    column-gap: clamp(2rem, 6vw, 5rem);
+  }
+
+  .contact__placeholder {
+    grid-column: 1 / -1;
+  }
+}

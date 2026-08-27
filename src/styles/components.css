@@ -10,12 +10,14 @@
 }
 
 .hero--panel {
-  height: 240vh;
+  height: auto;
+  min-height: 100dvh;
 }
 
 .hero--static {
   height: auto;
 }
+
 
 .hero__stage {
   position: sticky;
@@ -137,12 +139,16 @@
 /* -------------------------------------------------- hero — panel (mobile) */
 
 .hero__stage--panel {
+  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: clamp(1.5rem, 5vh, 2.5rem);
-  padding: calc(var(--nav-h) + 1rem) 0 clamp(1.5rem, 5vh, 3rem);
-  background: var(--ivory);
+  justify-content: flex-start;
+  gap: clamp(1.25rem, 4vh, 2rem);
+  padding: calc(var(--nav-h) + 0.5rem) 0 clamp(2.5rem, 6vh, 4rem);
+  background: linear-gradient(180deg, var(--ivory) 0%, var(--cream) 100%);
+  border-bottom: 1px solid var(--rule-soft);
+  height: auto;
+  min-height: 100dvh;
 }
 
 .hero__stage--panel::after {
@@ -157,13 +163,18 @@
   aspect-ratio: 3 / 2;
   overflow: hidden;
   background: var(--ink);
+  box-shadow: var(--shadow-md);
 }
 
 .hero__stage--panel .hero__overlay {
   max-width: none;
-  padding-bottom: 0;
+  padding: 0 var(--gutter);
   color: var(--ink);
+  opacity: 1 !important;
+  translate: none !important;
+  pointer-events: auto !important;
 }
+
 
 .hero__stage--panel .hero__logo {
   filter: none;
