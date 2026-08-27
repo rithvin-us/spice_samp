@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Check, Plus } from 'lucide-react';
+import Packet from './Packet';
 import type { Product } from '../../types';
 import { useT } from '../../hooks/useTranslation';
 import { useCartStore } from '../../store/cartStore';
@@ -26,13 +27,10 @@ export default function ProductCard({ product, priority = false }: Props) {
 
   return (
     <article className="card reveal" style={{ '--accent': product.accent } as React.CSSProperties}>
+      {/* Same packet treatment as the spotlight and the product page, so a
+          blend looks like the pouch it is wherever it appears. */}
       <Link to={`/products/${product.slug}`} className="card__media" tabIndex={-1} aria-hidden="true">
-        <img
-          src={product.image}
-          alt=""
-          loading={priority ? 'eager' : 'lazy'}
-          decoding="async"
-        />
+        <Packet product={product} eager={priority} compact />
       </Link>
 
       <div className="card__body">
@@ -53,12 +51,16 @@ export default function ProductCard({ product, priority = false }: Props) {
           <span className="card__weight">
             {product.weight} {copy.common.grams}
           </span>
-          {/* The slot is always rendered so the meta row is the same height on
-              every card and the price baselines line up across the grid. */}
-          <span className={`card__badge ${product.signature ? '' : 'is-empty'}`} aria-hidden={!product.signature}>
-            {product.signature ? copy.product.signature : ''}
-          </span>
         </div>
+
+        {/* Its own line, always rendered, so the price baselines line up
+            across the grid whether or not a blend carries the mark. */}
+        <span
+          className={`card__badge ${product.signature ? '' : 'is-empty'}`}
+          aria-hidden={!product.signature}
+        >
+          {product.signature ? copy.product.signature : ''}
+        </span>
 
         <div className="card__actions">
           <Link to={`/products/${product.slug}`} className="btn btn--ghost card__view">

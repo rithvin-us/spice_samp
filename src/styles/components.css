@@ -343,27 +343,45 @@
 
 .card__media {
   position: relative;
-  display: block;
-  padding: clamp(1rem, 3vw, 1.6rem);
+  display: grid;
+  place-items: end center;
+  aspect-ratio: 4 / 3.5;
+  padding: clamp(1.1rem, 3vw, 1.6rem) clamp(1rem, 3vw, 1.5rem) clamp(0.9rem, 2.5vw, 1.35rem);
   background:
     radial-gradient(120% 90% at 50% 8%, rgba(255, 255, 255, 0.85), transparent 60%),
     linear-gradient(to bottom, var(--parchment), var(--sand));
   overflow: hidden;
 }
 
-/* The pack, not the frame, is the thing on the shelf.
-   The four packs have different intrinsic aspect ratios, so the image fills the
-   tile and is fitted inside it. Sizing by percentage height instead would leave
-   the height to resolve against an aspect-ratio box, which it does not. */
-.card__media img {
-  width: 100%;
-  aspect-ratio: 4 / 3.4;
-  object-fit: contain;
-  filter: drop-shadow(0 10px 18px rgba(74, 49, 35, 0.22));
-  transition:
-    translate 0.6s var(--ease-out),
-    scale 0.6s var(--ease-out),
-    filter 0.6s var(--ease-out);
+/* The packet stands on the tile's floor rather than floating in the middle. */
+.packet--compact {
+  width: min(62%, 11rem);
+  align-self: end;
+}
+
+.packet--compact .packet__body {
+  /* A fixed, gentle turn — grid cards should read as a shelf, not as four
+     things independently tracking the cursor. */
+  transform: rotateY(-11deg);
+  filter: drop-shadow(0 14px 18px rgba(74, 49, 35, 0.26));
+}
+
+.packet--compact .packet__shadow {
+  bottom: -5%;
+  height: 6%;
+}
+
+/* Hover is an enhancement only — nothing here is hover-only information. */
+@media (hover: hover) and (pointer: fine) {
+  .card:hover .packet--compact .packet__body {
+    transform: rotateY(-15deg) translateY(-6px) scale(1.03);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:hover .packet--compact .packet__body {
+    transform: rotateY(-11deg);
+  }
 }
 
 .card__body {
@@ -419,11 +437,10 @@
 }
 
 .card__badge {
-  flex-basis: 100%;
-  min-height: 1.5rem;
+  align-self: flex-start;
   display: inline-flex;
   align-items: center;
-  width: fit-content;
+  min-height: 1.6rem;
   padding: 0.2rem 0.55rem;
   border: 1px solid var(--rule);
   border-radius: 999px;
@@ -456,18 +473,11 @@
   --btn-bg: var(--leaf);
 }
 
-/* Hover is an enhancement only — nothing here is hover-only information. */
 @media (hover: hover) and (pointer: fine) {
   .card:hover {
     translate: 0 -4px;
     border-color: var(--rule);
     box-shadow: var(--shadow-md);
-  }
-
-  .card:hover .card__media img {
-    translate: 0 -6px;
-    scale: 1.035;
-    filter: drop-shadow(0 18px 26px rgba(74, 49, 35, 0.26));
   }
 }
 

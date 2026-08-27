@@ -20,10 +20,13 @@ export default function Packet({
   product,
   onError,
   eager = false,
+  compact = false,
 }: {
   product: Product;
   onError?: () => void;
   eager?: boolean;
+  /** Grid variant: smaller, turned less, and it never chases the pointer. */
+  compact?: boolean;
 }) {
   const { copy, tr } = useT();
   const stageRef = useRef<HTMLDivElement>(null);
@@ -32,7 +35,7 @@ export default function Packet({
   /** Desktop parallax: the packet turns a few degrees toward the pointer. */
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     const stage = stageRef.current;
-    if (!stage || isTouch) return;
+    if (!stage || isTouch || compact) return;
     const rect = stage.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
@@ -51,7 +54,7 @@ export default function Packet({
 
   return (
     <div
-      className="packet"
+      className={`packet ${compact ? 'packet--compact' : ''}`}
       ref={stageRef}
       onPointerMove={onPointerMove}
       onPointerLeave={reset}

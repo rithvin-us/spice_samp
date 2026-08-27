@@ -79,6 +79,8 @@ export default function HeroFrameSequence({
     let direction = 1;
     let rafId = 0;
     let reportedProgress = -1;
+    // True once the reader has actually moved through the section.
+    let hasScrubbed = false;
 
     /* ------------------------------------------------------------ loading */
 
@@ -171,7 +173,9 @@ export default function HeroFrameSequence({
     };
 
     const draw = (slot: number) => {
-      const use = resolve(slot);
+      // Before the reader has moved, only the exact opening frame may be
+      // painted — the poster stays visible underneath until it decodes.
+      const use = state[slot] === 2 ? slot : hasScrubbed ? resolve(slot) : -1;
       if (use < 0 || use === lastDrawn) return;
       const img = images[use];
       if (!img) return;
@@ -187,33 +191,21 @@ export default function HeroFrameSequence({
 
     /* ------------------------------------------------------- playback loop */
 
-    let autoPlayStart: number | null = performance.now();
-    const AUTO_PLAY_DURATION = 2200; // 2.2 seconds opening sequence
-
-    const tick = (now?: number) => {
+    /**
+     * The sequence is driven by scroll position and nothing else. There is no
+     * timed intro: on arrival the hero holds on its opening frame, and the film
+     * only advances as the reader moves through the section.
+     */
+    const tick = () => {
       rafId = requestAnimationFrame(tick);
-      const currentTime = now || performance.now();
       const rect = scroller.getBoundingClientRect();
       const travel = rect.height - window.innerHeight;
-      const actualProgress = travel <= 0 ? 0 : clamp(-rect.top / travel);
+      const progress = travel <= 0 ? 0 : clamp(-rect.top / travel);
 
-      // If user has scrolled down manually, cancel auto-play intro immediately.
-      if (actualProgress > 0.05) {
-        autoPlayStart = null;
-      }
-
-      let progress = actualProgress;
-      if (autoPlayStart !== null) {
-        const elapsed = currentTime - autoPlayStart;
-        if (elapsed < AUTO_PLAY_DURATION) {
-          const t = elapsed / AUTO_PLAY_DURATION;
-          // Smooth cubic ease-in-out curve
-          const introProgress = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-          progress = Math.max(actualProgress, introProgress);
-        } else {
-          autoPlayStart = null;
-        }
-      }
+      // Substituting a nearby frame is for keeping up with a fast scrub. At
+      // rest it would let the canvas shuffle through whichever frames happened
+      // to decode first, which looks like playback the reader did not ask for.
+      if (!hasScrubbed && progress > 0.002) hasScrubbed = true;
 
       if (Math.abs(progress - reportedProgress) > 0.002) {
         reportedProgress = progress;
