@@ -1,7 +1,12 @@
 node_modules
 dist
-.vercel
+.offline-markdown-preview
+
+# local verification scaffolding
 .verify-shots.mjs
 .diag.mjs
-.shoot*.mjs
-.offline-markdown-preview
+.shoot2.mjs
+.shoot3.mjs
+.probe.mjs
+.mobile.mjs
+.final.mjs

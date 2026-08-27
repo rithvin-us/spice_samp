@@ -2,7 +2,7 @@ import { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { processStages } from '../../data/heritage';
 import { useT } from '../../hooks/useTranslation';
-import { useCapability, useIsMobile } from '../../hooks/useCapability';
+import { useCapability } from '../../hooks/useCapability';
 import { allowsWebGL } from '../../lib/performance';
 import { clamp } from '../../lib/utils';
 import SectionLabel from '../ui/SectionLabel';
@@ -33,12 +33,13 @@ export default function MakingOfSection() {
   const inViewRef = useRef(false);
 
   /**
-   * The scene costs a Three.js chunk to download. On a phone that is a poor
-   * trade for a section that reads perfectly well as a list, so it is reserved
-   * for desktop, or for a phone that has told us it can afford it.
+   * The scene runs on phones too — it is the signature section, and dropping it
+   * there left mobile with a plain list where desktop got the whole idea. The
+   * cost is managed instead of avoided: the chunk is lazy and only requested
+   * once the section is near the viewport, the instance count roughly halves
+   * below the `high` tier, and `low`/`reduced` still fall back to the list.
    */
-  const isMobile = useIsMobile();
-  const use3D = allowsWebGL(tier) && (!isMobile || tier === 'high');
+  const use3D = allowsWebGL(tier);
   const total = processStages.length;
 
   /** One loop for the whole section. */

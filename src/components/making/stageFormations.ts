@@ -68,12 +68,14 @@ function source(count: number): Formation {
   const f = empty(count);
   for (let i = 0; i < count; i++) {
     const a = rand(i) * Math.PI * 2;
-    const r = Math.sqrt(rand(i + 900)) * 2.6;
+    const spread = Math.sqrt(rand(i + 900));
+    const r = spread * 1.55;
     place(
       f,
       i,
       Math.cos(a) * r,
-      -1.15 + rand(i + 40) * 0.28,
+      // A low mound rather than a flat slab — deepest at the centre.
+      -1.15 + (1 - spread) * 0.34 + rand(i + 40) * 0.22,
       Math.sin(a) * r * 0.55,
       0.7 + rand(i + 7) * 0.7
     );
@@ -89,10 +91,10 @@ function select(count: number): Formation {
   for (let i = 0; i < count; i++) {
     const g = groupOf(i);
     const angle = (g / groups) * Math.PI * 2;
-    const cx = Math.cos(angle) * 1.85;
-    const cz = Math.sin(angle) * 0.9;
+    const cx = Math.cos(angle) * 1.2;
+    const cz = Math.sin(angle) * 0.72;
     const a = rand(i + 12) * Math.PI * 2;
-    const r = Math.sqrt(rand(i + 55)) * 0.42;
+    const r = Math.sqrt(rand(i + 55)) * 0.36;
     place(
       f,
       i,
@@ -111,7 +113,7 @@ function roast(count: number): Formation {
   const f = empty(count);
   for (let i = 0; i < count; i++) {
     const a = rand(i + 21) * Math.PI * 2;
-    const r = Math.sqrt(rand(i + 66)) * 1.5;
+    const r = Math.sqrt(rand(i + 66)) * 1.25;
     const lift = rand(i + 88);
     place(
       f,
@@ -119,7 +121,7 @@ function roast(count: number): Formation {
       Math.cos(a) * r,
       -0.9 + lift * 1.5,
       Math.sin(a) * r * 0.7,
-      0.7 + rand(i + 13) * 0.5
+      0.78 + rand(i + 13) * 0.5
     );
     const base = new THREE.Color(SPICE_COLOURS[groupOf(i)]);
     paint(f, i, base.lerp(ROASTED, 0.35 + lift * 0.3));
@@ -132,14 +134,14 @@ function grind(count: number): Formation {
   const f = empty(count);
   for (let i = 0; i < count; i++) {
     const a = rand(i + 31) * Math.PI * 2;
-    const r = Math.sqrt(rand(i + 77)) * 2.1;
+    const r = Math.sqrt(rand(i + 77)) * 1.45;
     place(
       f,
       i,
       Math.cos(a) * r,
       -1.1 + rand(i + 5) * 0.12,
       Math.sin(a) * r * 0.62,
-      0.34 + rand(i + 17) * 0.3 // fragments are markedly finer
+      0.23 + rand(i + 17) * 0.16 // broken down to fragments
     );
     const base = new THREE.Color(SPICE_COLOURS[groupOf(i)]);
     paint(f, i, base.lerp(ROASTED, 0.45));
@@ -152,15 +154,17 @@ function blend(count: number): Formation {
   const f = empty(count);
   for (let i = 0; i < count; i++) {
     const t = rand(i + 41);
-    const turn = t * Math.PI * 6;
-    const r = 0.25 + t * 1.55;
+    // Two interleaved arms folding into each other.
+    const arm = i % 2 === 0 ? 0 : Math.PI;
+    const turn = t * Math.PI * 4.5 + arm;
+    const r = 0.18 + t * 1.05 + rand(i + 141) * 0.22;
     place(
       f,
       i,
       Math.cos(turn) * r,
-      -0.85 + t * 1.25,
-      Math.sin(turn) * r * 0.6,
-      0.36 + rand(i + 19) * 0.28
+      -0.9 + t * 1.55,
+      Math.sin(turn) * r * 0.62,
+      0.22 + rand(i + 19) * 0.15
     );
     const base = new THREE.Color(SPICE_COLOURS[groupOf(i)]);
     // Individual identity survives only at the edges of the swirl.
@@ -176,10 +180,10 @@ function pack(count: number): Formation {
     place(
       f,
       i,
-      (rand(i + 51) - 0.5) * 1.5,
-      -1.0 + rand(i + 61) * 1.75,
-      (rand(i + 71) - 0.5) * 0.5,
-      0.34 + rand(i + 23) * 0.2
+      (rand(i + 51) - 0.5) * 1.15,
+      -1.0 + rand(i + 61) * 1.9,
+      (rand(i + 71) - 0.5) * 0.45,
+      0.2 + rand(i + 23) * 0.12
     );
     paint(f, i, MASALA.clone().lerp(new THREE.Color('#8f2c17'), rand(i + 81) * 0.5));
   }
@@ -191,14 +195,14 @@ function serve(count: number): Formation {
   const f = empty(count);
   for (let i = 0; i < count; i++) {
     const a = (i / count) * Math.PI * 2 + rand(i + 91) * 0.4;
-    const r = 2.35 + rand(i + 101) * 0.5;
+    const r = 1.6 + rand(i + 101) * 0.45;
     place(
       f,
       i,
       Math.cos(a) * r,
       -1.2 + rand(i + 111) * 0.18,
       Math.sin(a) * r * 0.5,
-      0.3 + rand(i + 27) * 0.24
+      0.18 + rand(i + 27) * 0.14
     );
     paint(f, i, MASALA.clone().lerp(new THREE.Color('#c1663d'), rand(i + 121) * 0.6));
   }

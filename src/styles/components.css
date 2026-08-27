@@ -10,8 +10,9 @@
 }
 
 .hero--panel {
-  height: auto;
-  min-height: 100dvh;
+  /* Travel for the mobile scrub. Without it the section is exactly one
+     viewport tall, progress is pinned at 0, and the sequence never plays. */
+  height: 240vh;
 }
 
 .hero--static {
@@ -139,16 +140,15 @@
 /* -------------------------------------------------- hero — panel (mobile) */
 
 .hero__stage--panel {
-  position: relative;
+  /* Inherits `position: sticky; height: 100dvh` from .hero__stage — the panel
+     pins exactly like the full-bleed stage, so the film scrubs while the
+     wordmark and copy hold still beneath it. */
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   gap: clamp(1.25rem, 4vh, 2rem);
-  padding: calc(var(--nav-h) + 0.5rem) 0 clamp(2.5rem, 6vh, 4rem);
+  padding: calc(var(--nav-h) + 0.5rem) 0 clamp(1.5rem, 4vh, 2.5rem);
   background: linear-gradient(180deg, var(--ivory) 0%, var(--cream) 100%);
-  border-bottom: 1px solid var(--rule-soft);
-  height: auto;
-  min-height: 100dvh;
 }
 
 .hero__stage--panel::after {
@@ -842,8 +842,8 @@
 
 .journey__visual {
   position: relative;
-  aspect-ratio: 1 / 1;
-  max-height: 42vh;
+  aspect-ratio: 5 / 4;
+  max-height: 34vh;
   margin-inline: auto;
   width: 100%;
 }
