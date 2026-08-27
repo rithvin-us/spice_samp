@@ -1,0 +1,120 @@
+# AURA 3D — Spatial E-Commerce Platform 🚀
+
+[![Vite](https://img.shields.io/badge/Vite-6.2.0-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![React](https://img.shields.io/badge/React-18.3.1-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactjs.org/)
+[![Three.js](https://img.shields.io/badge/Three.js-WebGL_0.174-000000?style=for-the-badge&logo=three.js&logoColor=white)](https://threejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+
+**AURA 3D** is an interactive, high-performance spatial e-commerce web application featuring real-time WebGL 3D product viewports, dynamic PBR material finishes, exploded sub-assembly inspection, and responsive dark glassmorphism styling. Optimized for 60FPS rendering across high-end desktop GPUs and low-end mobile devices.
+
+---
+
+## ✨ Features
+
+- 🎧 **Interactive 3D Studio Viewport**: 360° orbit camera controls, zoom boundaries, and real-time mesh rotation.
+- 🎨 **Dynamic Material & Color Swapper**: Live updates of PBR metallic textures, accent colors, and glow rings without reloading.
+- 💥 **Exploded Assembly Inspection**: Smooth slider to explode component layers and inspect internal hardware build quality.
+- ⚡ **Low-End Mobile & PC Optimizations**:
+  - WebGL capability detection & graceful static fallback.
+  - Adaptive DPR (Device Pixel Ratio) capping to reduce GPU fragment shader overhead by up to 70%.
+  - `@react-three/drei` `PerformanceMonitor` to automatically adjust frame rates if FPS drops below 30.
+  - Manual **"Low Power Mode"** toggle in the navigation header.
+- 🛍️ **Complete Shopping Cart Workflow**: Zustand-powered cart drawer with free shipping progress bar, quantity modifiers, and subtotal calculation.
+- 🌟 **Dark Glassmorphism Design System**: Modern HSL color palette, glowing highlights, backdrop blur panels, and smooth micro-animations.
+
+---
+
+## 🛠️ Technology Stack
+
+| Layer | Technology |
+| :--- | :--- |
+| **Framework** | [React 18](https://reactjs.org/) + [Vite](https://vitejs.dev/) |
+| **Language** | [TypeScript](https://www.typescriptlang.org/) |
+| **3D Rendering** | [Three.js](https://threejs.org/) + [@react-three/fiber](https://docs.pmnd.rs/react-three-fiber) |
+| **3D Helpers** | [@react-three/drei](https://github.com/pmndrs/drei) (OrbitControls, Float, ContactShadows, PerformanceMonitor) |
+| **State Management** | [Zustand](https://github.com/pmndrs/zustand) |
+| **Animations** | [Framer Motion](https://www.framer.com/motion/) |
+| **Icons & UI** | [Lucide React](https://lucide.dev/) |
+| **Styling** | Modern Vanilla CSS Design Tokens (Glassmorphism & Gradients) |
+
+---
+
+## 📁 Project Folder Structure
+
+```
+spice-samp/
+├── src/
+│   ├── components/
+│   │   ├── 3d/               # WebGL Viewports & Procedural Meshes
+│   │   │   ├── ProductViewer3D.tsx    # R3F Canvas with PerformanceMonitor
+│   │   │   ├── HeroCanvas3D.tsx       # Interactive 3D background scene
+│   │   │   ├── EnvironmentStudio.tsx  # Dynamic studio lighting setups
+│   │   │   └── models/                # Procedural 3D PBR Meshes
+│   │   │       ├── Headphones3D.tsx
+│   │   │       ├── Sneaker3D.tsx
+│   │   │       ├── Smartwatch3D.tsx
+│   │   │       └── Perfume3D.tsx
+│   │   └── ui/               # Interactive UI Components
+│   │       ├── Header.tsx             # Brand header, search & low-power toggle
+│   │       ├── Hero.tsx               # Hero banner showcase
+│   │       ├── ProductCard.tsx        # Card with finish swatches & 3D trigger
+│   │       ├── ProductGrid.tsx        # Filterable catalog layout
+│   │       ├── ProductModal.tsx       # Fullscreen 3D customizer modal
+│   │       └── CartDrawer.tsx         # Slide-out interactive shopping cart
+│   ├── store/                # Application State
+│   │   ├── cartStore.ts      # Cart items, quantity & subtotal
+│   │   └── viewerStore.ts    # 3D canvas config, colorways & low-power mode
+│   ├── data/                 # E-commerce Catalog Data
+│   │   └── products.ts       # Products dataset & 3D configurations
+│   ├── styles/
+│   │   └── index.css         # Glassmorphic Design System
+│   ├── types/
+│   │   └── index.ts          # TypeScript interfaces
+│   ├── utils/
+│   │   └── webglDetect.ts    # WebGL & hardware capability detector
+│   ├── App.tsx               # Main application container
+│   └── main.tsx              # React DOM entry point
+├── package.json              # Project dependencies & scripts
+├── tsconfig.json             # TypeScript compiler settings
+├── vite.config.ts            # Vite bundler configuration
+└── index.html                # Entry HTML with Google Fonts
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js v18.0.0 or higher
+- npm or yarn
+
+### Installation
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/rithvin-us/spice_samp.git
+   cd spice_samp
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Start the local development server**:
+   ```bash
+   npm run dev
+   ```
+   Open `http://localhost:5173` in your browser.
+
+4. **Build for production**:
+   ```bash
+   npm run build
+   ```
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License.

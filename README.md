@@ -1,120 +1,121 @@
-# AURA 3D — Spatial E-Commerce Platform 🚀
+# SOLI MASALA
 
-[![Vite](https://img.shields.io/badge/Vite-6.2.0-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
-[![React](https://img.shields.io/badge/React-18.3.1-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://reactjs.org/)
-[![Three.js](https://img.shields.io/badge/Three.js-WebGL_0.174-000000?style=for-the-badge&logo=three.js&logoColor=white)](https://threejs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+**Ground with tradition. Made for today.**
 
-**AURA 3D** is an interactive, high-performance spatial e-commerce web application featuring real-time WebGL 3D product viewports, dynamic PBR material finishes, exploded sub-assembly inspection, and responsive dark glassmorphism styling. Optimized for 60FPS rendering across high-end desktop GPUs and low-end mobile devices.
-
----
-
-## ✨ Features
-
-- 🎧 **Interactive 3D Studio Viewport**: 360° orbit camera controls, zoom boundaries, and real-time mesh rotation.
-- 🎨 **Dynamic Material & Color Swapper**: Live updates of PBR metallic textures, accent colors, and glow rings without reloading.
-- 💥 **Exploded Assembly Inspection**: Smooth slider to explode component layers and inspect internal hardware build quality.
-- ⚡ **Low-End Mobile & PC Optimizations**:
-  - WebGL capability detection & graceful static fallback.
-  - Adaptive DPR (Device Pixel Ratio) capping to reduce GPU fragment shader overhead by up to 70%.
-  - `@react-three/drei` `PerformanceMonitor` to automatically adjust frame rates if FPS drops below 30.
-  - Manual **"Low Power Mode"** toggle in the navigation header.
-- 🛍️ **Complete Shopping Cart Workflow**: Zustand-powered cart drawer with free shipping progress bar, quantity modifiers, and subtotal calculation.
-- 🌟 **Dark Glassmorphism Design System**: Modern HSL color palette, glowing highlights, backdrop blur panels, and smooth micro-animations.
+A customer-facing storefront prototype for SOLI Masala — a South Indian spice
+brand. Handpicked spices and carefully crafted masalas, built around the real
+supplied packaging artwork and a cinematic hero sequence.
 
 ---
 
-## 🛠️ Technology Stack
+## Running it
 
-| Layer | Technology |
-| :--- | :--- |
-| **Framework** | [React 18](https://reactjs.org/) + [Vite](https://vitejs.dev/) |
-| **Language** | [TypeScript](https://www.typescriptlang.org/) |
-| **3D Rendering** | [Three.js](https://threejs.org/) + [@react-three/fiber](https://docs.pmnd.rs/react-three-fiber) |
-| **3D Helpers** | [@react-three/drei](https://github.com/pmndrs/drei) (OrbitControls, Float, ContactShadows, PerformanceMonitor) |
-| **State Management** | [Zustand](https://github.com/pmndrs/zustand) |
-| **Animations** | [Framer Motion](https://www.framer.com/motion/) |
-| **Icons & UI** | [Lucide React](https://lucide.dev/) |
-| **Styling** | Modern Vanilla CSS Design Tokens (Glassmorphism & Gradients) |
-
----
-
-## 📁 Project Folder Structure
-
+```bash
+npm install
+npm run dev          # http://localhost:5173
 ```
-spice-samp/
-├── src/
-│   ├── components/
-│   │   ├── 3d/               # WebGL Viewports & Procedural Meshes
-│   │   │   ├── ProductViewer3D.tsx    # R3F Canvas with PerformanceMonitor
-│   │   │   ├── HeroCanvas3D.tsx       # Interactive 3D background scene
-│   │   │   ├── EnvironmentStudio.tsx  # Dynamic studio lighting setups
-│   │   │   └── models/                # Procedural 3D PBR Meshes
-│   │   │       ├── Headphones3D.tsx
-│   │   │       ├── Sneaker3D.tsx
-│   │   │       ├── Smartwatch3D.tsx
-│   │   │       └── Perfume3D.tsx
-│   │   └── ui/               # Interactive UI Components
-│   │       ├── Header.tsx             # Brand header, search & low-power toggle
-│   │       ├── Hero.tsx               # Hero banner showcase
-│   │       ├── ProductCard.tsx        # Card with finish swatches & 3D trigger
-│   │       ├── ProductGrid.tsx        # Filterable catalog layout
-│   │       ├── ProductModal.tsx       # Fullscreen 3D customizer modal
-│   │       └── CartDrawer.tsx         # Slide-out interactive shopping cart
-│   ├── store/                # Application State
-│   │   ├── cartStore.ts      # Cart items, quantity & subtotal
-│   │   └── viewerStore.ts    # 3D canvas config, colorways & low-power mode
-│   ├── data/                 # E-commerce Catalog Data
-│   │   └── products.ts       # Products dataset & 3D configurations
-│   ├── styles/
-│   │   └── index.css         # Glassmorphic Design System
-│   ├── types/
-│   │   └── index.ts          # TypeScript interfaces
-│   ├── utils/
-│   │   └── webglDetect.ts    # WebGL & hardware capability detector
-│   ├── App.tsx               # Main application container
-│   └── main.tsx              # React DOM entry point
-├── package.json              # Project dependencies & scripts
-├── tsconfig.json             # TypeScript compiler settings
-├── vite.config.ts            # Vite bundler configuration
-└── index.html                # Entry HTML with Google Fonts
+
+```bash
+npm run lint         # tsc --noEmit
+npm run build        # typecheck + production build to dist/
+npm run preview      # serve the production build
+```
+
+The hero frames and the transparent logo are committed, so a fresh clone runs
+without any asset preprocessing. To regenerate them:
+
+```bash
+npm run hero:frames:force   # re-extract the hero sequence from the source video
+npm run brand:logo          # re-cut the transparent logo from the closing frame
 ```
 
 ---
 
-## 🚀 Getting Started
+## Stack
 
-### Prerequisites
+| | |
+|---|---|
+| Build | Vite 6 + React 18 + TypeScript (strict) |
+| Routing | React Router 7 |
+| State | Zustand (cart, language), both persisted to `localStorage` |
+| 3D | Three.js via `@react-three/fiber` + `@react-three/drei`, lazily loaded |
+| Smooth scroll | Lenis (desktop pointer only) |
+| Icons | lucide-react |
+| Styling | Plain CSS with design tokens — no framework |
 
-- Node.js v18.0.0 or higher
-- npm or yarn
-
-### Installation
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/rithvin-us/spice_samp.git
-   cd spice_samp
-   ```
-
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-
-3. **Start the local development server**:
-   ```bash
-   npm run dev
-   ```
-   Open `http://localhost:5173` in your browser.
-
-4. **Build for production**:
-   ```bash
-   npm run build
-   ```
+Scroll-driven sections use `position: sticky` plus a single
+`requestAnimationFrame` loop rather than a scroll-animation library. That keeps
+native scrolling intact and keeps ~70 KB of animation runtime out of the bundle.
 
 ---
 
-## 📜 License
+## Routes
 
-This project is licensed under the MIT License.
+| Path | Page |
+|---|---|
+| `/` | Homepage — hero, brand statement, pantry, product spotlight, process, heritage, about |
+| `/shop` | Full catalogue with filters and search (state mirrored into the URL) |
+| `/products/:slug` | Product detail — viewer, purchase controls, ingredients |
+| `/about` | Origin, kitchen, craft, people, future |
+| `/checkout` | Demonstration checkout |
+
+---
+
+## Where things live
+
+```
+img/                          supplied originals — never modified by any script
+  hero frames/                the source cinematic video
+public/img/
+  hero-frames/                generated WebP sequence (+ mobile/ subset)
+  products/                   the four packs, web-named
+  soli-logo.png               transparent lockup cut from the closing hero frame
+src/
+  data/                       products, ingredients, heritage, translations
+  store/                      cartStore, languageStore
+  lib/                        performance (capability tiers), animations, utils
+  hooks/                      useTranslation, useCapability, useMeta
+  components/                 hero, products, cart, making, heritage, layout, ui, three
+  pages/                      one file per route
+  styles/                     tokens → base → layout → components
+scripts/                      hero frame + logo pipelines
+docs/HERO_ASSET_PIPELINE.md   full hero asset documentation
+legacy/aura-3d/               the unrelated implementation that previously occupied this repo
+```
+
+### Adding products
+
+Append to `src/data/products.ts`. Nothing in the UI is hard-coded to a slug or
+to a catalogue length — the grid, filters, search, routes, footer and cart all
+read from that array.
+
+### Adding a 3D model
+
+Drop a `.glb` into `public/models/` and set `modelPath` on the product.
+`ProductViewer` renders the model when one is present and the supplied packaging
+artwork when it is not. No other file changes.
+
+---
+
+## English and Tamil
+
+One dictionary in `src/data/translations.ts`, one hook (`useT`). Page components
+are never duplicated per language. Product, ingredient and narrative copy carry
+both languages in their own data files as `{ en, ta }` values.
+
+The Tamil object is type-checked against the English one, so a missing Tamil key
+is a build error rather than a blank string in production.
+
+---
+
+## Prototype disclosures
+
+* Packaging artwork, Tamil product names and the SOLI mark are supplied brand
+  assets and are used as given — nothing has been redesigned or regenerated.
+* Pricing, weights, availability, blend descriptions and all narrative copy are
+  prototype content written for this build.
+* The heritage and about narratives are deliberately non-specific: no founders,
+  dates, places, facilities, certifications, awards or production figures.
+* Checkout is a demonstration. No payment is processed, and no card, address or
+  personal detail is collected or transmitted.
+* There are no reviews, ratings or testimonials.

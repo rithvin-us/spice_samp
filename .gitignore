@@ -1,1 +1,5 @@
 node_modules
+dist
+.verify-shots.mjs
+.diag.mjs
+.offline-markdown-preview

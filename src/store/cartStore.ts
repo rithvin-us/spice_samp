@@ -1,73 +1,114 @@
 import { create } from 'zustand';
-import { CartItem, ColorOption, Product } from '../types';
+import { persist } from 'zustand/middleware';
+import type { CartLine, Product } from '../types';
 
 interface CartState {
-  items: CartItem[];
+  lines: CartLine[];
   isOpen: boolean;
-  openCart: () => void;
-  closeCart: () => void;
-  toggleCart: () => void;
-  addItem: (product: Product, selectedColor: ColorOption) => void;
-  removeItem: (productId: string, colorId: string) => void;
-  updateQuantity: (productId: string, colorId: string, quantity: number) => void;
-  clearCart: () => void;
-  getTotalItems: () => number;
-  getSubtotal: () => number;
+  /** Id of the product most recently added — drives the "added" feedback. */
+  lastAdded: string | null;
+
+  add: (product: Product, quantity?: number) => void;
+  remove: (productId: string) => void;
+  increment: (productId: string) => void;
+  decrement: (productId: string) => void;
+  setQuantity: (productId: string, quantity: number) => void;
+  clear: () => void;
+
+  open: () => void;
+  close: () => void;
+  toggle: () => void;
+  clearLastAdded: () => void;
 }
 
-export const useCartStore = create<CartState>((set, get) => ({
-  items: [],
-  isOpen: false,
-  openCart: () => set({ isOpen: true }),
-  closeCart: () => set({ isOpen: false }),
-  toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
+const MAX_PER_LINE = 20;
 
-  addItem: (product, selectedColor) => {
-    set((state) => {
-      const existingIndex = state.items.findIndex(
-        (item) => item.product.id === product.id && item.selectedColor.id === selectedColor.id
-      );
+export const useCartStore = create<CartState>()(
+  persist(
+    (set) => ({
+      lines: [],
+      isOpen: false,
+      lastAdded: null,
 
-      if (existingIndex > -1) {
-        const updated = [...state.items];
-        updated[existingIndex].quantity += 1;
-        return { items: updated, isOpen: true };
-      }
+      add: (product, quantity = 1) =>
+        set((state) => {
+          const existing = state.lines.find((l) => l.productId === product.id);
+          const lines = existing
+            ? state.lines.map((l) =>
+                l.productId === product.id
+                  ? { ...l, quantity: Math.min(MAX_PER_LINE, l.quantity + quantity) }
+                  : l
+              )
+            : [
+                ...state.lines,
+                {
+                  productId: product.id,
+                  slug: product.slug,
+                  name: product.name,
+                  tamilName: product.tamilName,
+                  price: product.price,
+                  weight: product.weight,
+                  image: product.image,
+                  quantity: Math.min(MAX_PER_LINE, quantity),
+                },
+              ];
+          // Adding never navigates and never force-opens the drawer; the count
+          // badge and the inline confirmation carry the feedback instead.
+          return { lines, lastAdded: product.id };
+        }),
 
-      return {
-        items: [...state.items, { product, selectedColor, quantity: 1 }],
-        isOpen: true,
-      };
-    });
-  },
+      remove: (productId) =>
+        set((state) => ({ lines: state.lines.filter((l) => l.productId !== productId) })),
 
-  removeItem: (productId, colorId) => {
-    set((state) => ({
-      items: state.items.filter(
-        (item) => !(item.product.id === productId && item.selectedColor.id === colorId)
-      ),
-    }));
-  },
+      increment: (productId) =>
+        set((state) => ({
+          lines: state.lines.map((l) =>
+            l.productId === productId
+              ? { ...l, quantity: Math.min(MAX_PER_LINE, l.quantity + 1) }
+              : l
+          ),
+        })),
 
-  updateQuantity: (productId, colorId, quantity) => {
-    if (quantity <= 0) {
-      get().removeItem(productId, colorId);
-      return;
+      decrement: (productId) =>
+        set((state) => ({
+          lines: state.lines
+            .map((l) => (l.productId === productId ? { ...l, quantity: l.quantity - 1 } : l))
+            .filter((l) => l.quantity > 0),
+        })),
+
+      setQuantity: (productId, quantity) =>
+        set((state) => ({
+          lines: state.lines
+            .map((l) =>
+              l.productId === productId
+                ? { ...l, quantity: Math.max(0, Math.min(MAX_PER_LINE, quantity)) }
+                : l
+            )
+            .filter((l) => l.quantity > 0),
+        })),
+
+      clear: () => set({ lines: [], lastAdded: null }),
+
+      open: () => set({ isOpen: true }),
+      close: () => set({ isOpen: false }),
+      toggle: () => set((state) => ({ isOpen: !state.isOpen })),
+      clearLastAdded: () => set({ lastAdded: null }),
+    }),
+    {
+      name: 'soli-cart',
+      // Only the contents survive a reload — never the open/closed drawer.
+      partialize: (state) => ({ lines: state.lines }),
     }
-    set((state) => ({
-      items: state.items.map((item) => {
-        if (item.product.id === productId && item.selectedColor.id === colorId) {
-          return { ...item, quantity };
-        }
-        return item;
-      }),
-    }));
-  },
+  )
+);
 
-  clearCart: () => set({ items: [] }),
+/* ------------------------------------------------------------- selectors */
 
-  getTotalItems: () => get().items.reduce((total, item) => total + item.quantity, 0),
+export const selectCount = (state: CartState): number =>
+  state.lines.reduce((sum, l) => sum + l.quantity, 0);
 
-  getSubtotal: () =>
-    get().items.reduce((total, item) => total + item.product.price * item.quantity, 0),
-}));
+export const selectSubtotal = (state: CartState): number =>
+  state.lines.reduce((sum, l) => sum + l.price * l.quantity, 0);
+
+export const useCartCount = (): number => useCartStore(selectCount);
+export const useCartSubtotal = (): number => useCartStore(selectSubtotal);

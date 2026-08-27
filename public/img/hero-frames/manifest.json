@@ -1,0 +1,20 @@
+{
+  "generatedBy": "scripts/process-hero-frames.mjs",
+  "sourceKind": "video",
+  "desktop": {
+    "basePath": "/img/hero-frames",
+    "frameCount": 100,
+    "width": 1280,
+    "height": 720
+  },
+  "mobile": {
+    "basePath": "/img/hero-frames/mobile",
+    "frameCount": 50,
+    "width": 720,
+    "height": 405
+  },
+  "poster": "/img/hero-poster.webp",
+  "format": "webp",
+  "naming": "hero-0001.webp (1-indexed, zero-padded to 4)",
+  "frameCount": 100
+}
