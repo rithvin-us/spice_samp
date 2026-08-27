@@ -1,5 +1,7 @@
 node_modules
 dist
+.vercel
 .verify-shots.mjs
 .diag.mjs
+.shoot*.mjs
 .offline-markdown-preview
