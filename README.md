@@ -118,4 +118,9 @@ is a build error rather than a blank string in production.
   dates, places, facilities, certifications, awards or production figures.
 * Checkout is a demonstration. No payment is processed, and no card, address or
   personal detail is collected or transmitted.
-* There are no reviews, ratings or testimonials.
+* Customer reviews, the customer marquee and all contact destinations are
+  placeholder content. Every surface that renders them says so on the page, no
+  real business or logo is reproduced, and no review/aggregateRating structured
+  data is emitted — so the ratings cannot be indexed as genuine. Replace
+  `reviews`, `clients` and `contactChannels` in `src/data/social.ts` with real,
+  permissioned content before this goes near production.
