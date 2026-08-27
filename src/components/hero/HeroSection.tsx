@@ -38,23 +38,29 @@ export default function HeroSection() {
    * Progress drives the overlay directly through the DOM. Fading the headline
    * through React state would re-render the section on every frame.
    */
-  const handleProgress = useCallback((progress: number) => {
-    const overlay = overlayRef.current;
-    if (overlay) {
-      // Copy holds for the opening beat, then clears the frame before the
-      // sequence resolves into the SOLI lockup.
-      const fade = 1 - clamp(mapRange(progress, 0.05, 0.3, 0, 1));
-      overlay.style.opacity = String(fade);
-      overlay.style.translate = `0 ${(1 - fade) * -1.5}rem`;
-      overlay.style.pointerEvents = fade < 0.15 ? 'none' : 'auto';
-    }
-    const stage = stageRef.current;
-    if (stage) {
-      // The closing frames sit on cream; softening the scrim lets the hero hand
-      // over to the page instead of ending on a hard edge.
-      stage.style.setProperty('--scrim', String(1 - clamp(mapRange(progress, 0.6, 0.92, 0, 1))));
-    }
-  }, []);
+  const handleProgress = useCallback(
+    (progress: number) => {
+      if (panelLayout) return;
+
+      const overlay = overlayRef.current;
+      if (overlay) {
+        // Copy holds for the opening beat, then clears the frame before the
+        // sequence resolves into the SOLI lockup.
+        const fade = 1 - clamp(mapRange(progress, 0.05, 0.3, 0, 1));
+        overlay.style.opacity = String(fade);
+        overlay.style.translate = `0 ${(1 - fade) * -1.5}rem`;
+        overlay.style.pointerEvents = fade < 0.15 ? 'none' : 'auto';
+      }
+      const stage = stageRef.current;
+      if (stage) {
+        // The closing frames sit on cream; softening the scrim lets the hero hand
+        // over to the page instead of ending on a hard edge.
+        stage.style.setProperty('--scrim', String(1 - clamp(mapRange(progress, 0.6, 0.92, 0, 1))));
+      }
+    },
+    [panelLayout]
+  );
+
 
   const overlay = (
     <div className="hero__overlay" ref={overlayRef}>
