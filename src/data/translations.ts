@@ -177,6 +177,44 @@ const en = {
     language: 'Language',
   },
 
+  spotlight: {
+    next: 'Next masala',
+    previous: 'Previous masala',
+  },
+
+  reviews: {
+    label: 'From our kitchens to yours',
+    title: 'What cooks say',
+    titleAccent: 'after the first packet.',
+    body: 'Notes from people who cook with SOLI every week.',
+    sample: 'Sample content',
+    disclaimer:
+      'Prototype build: the reviews and customer marks on this page are placeholder content, not real customers or endorsements.',
+    verified: 'Cooks with SOLI',
+    ratingLabel: 'Rated',
+    outOf: 'out of 5',
+  },
+
+  clients: {
+    title: 'Kitchens that cook with SOLI',
+    placeholder: 'Placeholder marks',
+  },
+
+  contact: {
+    label: 'Contact',
+    title: 'Talk to us.',
+    body: 'Questions about a blend, a bulk order, or a recipe you would like us to get right — we read everything.',
+    linkedin: 'LinkedIn',
+    instagram: 'Instagram',
+    whatsapp: 'WhatsApp',
+    email: 'Email',
+    linkedinNote: 'Company updates',
+    instagramNote: 'Kitchen notes and recipes',
+    whatsappNote: 'Quickest reply',
+    emailNote: 'Orders and everything else',
+    placeholderNote: 'Prototype: these links are placeholders and go nowhere yet.',
+  },
+
   common: {
     currency: '₹',
     grams: 'g',
@@ -356,6 +394,44 @@ const ta: Dictionary = {
       'இது ஒரு விளக்க மாதிரி. தயாரிப்புப் பொட்டலங்களும் SOLI அடையாளமும் வழங்கப்பட்ட பிராண்ட் சொத்துகள்; விலை, இருப்பு மற்றும் கதை உள்ளடக்கம் மாதிரித் தகவல்.',
     rights: 'SOLI Masala',
     language: 'மொழி',
+  },
+
+  spotlight: {
+    next: 'அடுத்த மசாலா',
+    previous: 'முந்தைய மசாலா',
+  },
+
+  reviews: {
+    label: 'எங்கள் சமையலறையிலிருந்து உங்களுக்கு',
+    title: 'முதல் பொட்டலத்திற்குப் பிறகு',
+    titleAccent: 'சமையல்காரர்கள் சொல்வது.',
+    body: 'ஒவ்வொரு வாரமும் SOLI கொண்டு சமைப்பவர்களின் குறிப்புகள்.',
+    sample: 'மாதிரி உள்ளடக்கம்',
+    disclaimer:
+      'இது ஒரு மாதிரி பதிப்பு: இந்தப் பக்கத்தில் உள்ள விமர்சனங்களும் வாடிக்கையாளர் அடையாளங்களும் மாதிரித் தகவல்; உண்மையான வாடிக்கையாளர்கள் அல்லது பரிந்துரைகள் அல்ல.',
+    verified: 'SOLI கொண்டு சமைப்பவர்',
+    ratingLabel: 'மதிப்பீடு',
+    outOf: '/ 5',
+  },
+
+  clients: {
+    title: 'SOLI கொண்டு சமைக்கும் சமையலறைகள்',
+    placeholder: 'மாதிரி அடையாளங்கள்',
+  },
+
+  contact: {
+    label: 'தொடர்பு',
+    title: 'எங்களிடம் பேசுங்கள்.',
+    body: 'ஒரு கூட்டு பற்றிய கேள்வி, மொத்த ஆர்டர், அல்லது நாங்கள் சரியாகச் செய்ய வேண்டும் என நீங்கள் விரும்பும் ஒரு செய்முறை — அனைத்தையும் படிக்கிறோம்.',
+    linkedin: 'LinkedIn',
+    instagram: 'Instagram',
+    whatsapp: 'WhatsApp',
+    email: 'மின்னஞ்சல்',
+    linkedinNote: 'நிறுவனச் செய்திகள்',
+    instagramNote: 'சமையல் குறிப்புகளும் செய்முறைகளும்',
+    whatsappNote: 'விரைவான பதில்',
+    emailNote: 'ஆர்டர்களும் மற்ற அனைத்தும்',
+    placeholderNote: 'மாதிரி: இந்த இணைப்புகள் இடம்பிடிப்புகள், இன்னும் எங்கும் செல்லாது.',
   },
 
   common: {
