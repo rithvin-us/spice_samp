@@ -6,6 +6,11 @@ A customer-facing storefront prototype for SOLI Masala — a South Indian spice
 brand. Handpicked spices and carefully crafted masalas, built around the real
 supplied packaging artwork and a cinematic hero sequence.
 
+[![CI](https://github.com/rithvin-us/spice_samp/actions/workflows/ci.yml/badge.svg)](https://github.com/rithvin-us/spice_samp/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/rithvin-us/spice_samp/actions/workflows/codeql.yml/badge.svg)](https://github.com/rithvin-us/spice_samp/actions/workflows/codeql.yml)
+
+Live: <https://solisampleweb.vercel.app>
+
 ---
 
 ## Running it
@@ -80,6 +85,9 @@ src/
   styles/                     tokens → base → layout → components
 scripts/                      hero frame + logo pipelines
 docs/HERO_ASSET_PIPELINE.md   full hero asset documentation
+docs/ANIMATION_SYSTEM.md      every animation, how it is driven, where it stops
+docs/CI_CD.md                 the build/check/deploy pipeline
+.github/workflows/            CI (typecheck + build) and CodeQL
 ```
 
 
@@ -107,6 +115,22 @@ The Tamil object is type-checked against the English one, so a missing Tamil key
 is a build error rather than a blank string in production.
 
 ---
+
+## Continuous integration & deployment
+
+**GitHub Actions is the gate, Vercel is the deploy** — they don't overlap.
+
+* Every push and PR runs `npm run lint` (typecheck) and `npm run build` on
+  Node 20 and 22 (`.github/workflows/ci.yml`), plus CodeQL security/quality
+  analysis (`.github/workflows/codeql.yml`).
+* Deployment is Vercel's Git integration, configured by `vercel.json`: `main`
+  ships to production, every PR gets a preview URL. No deploy secret lives in
+  Actions.
+* Dependabot batches weekly dependency updates into a few grouped PRs
+  (`.github/dependabot.yml`).
+
+Full details, and opt-in extensions (Lighthouse budgets, release tagging), are
+in **docs/CI_CD.md**.
 
 ## Prototype disclosures
 
