@@ -1,0 +1,39 @@
+name: CodeQL
+
+# Static security analysis of the TypeScript/JavaScript sources. Runs on pushes
+# and pull requests to main, plus a weekly sweep so newly published advisories
+# are caught even when the code is quiet. Free for public repositories.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 6 * * 1' # Mondays, 06:00 UTC
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  analyze:
+    name: Analyze (JavaScript/TypeScript)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+          # security-and-quality adds maintainability queries on top of the
+          # default security set.
+          queries: security-and-quality
+
+      # No compilation step: CodeQL reads TS/JS sources directly.
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: '/language:javascript-typescript'
